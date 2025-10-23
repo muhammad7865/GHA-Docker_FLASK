@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flask Lab Project</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Flask Lab Project</h1>
+      <form id="nameForm">
+        <label for="name">Enter your name:</label>
+        <input id="name" name="name" placeholder="Ali" required />
+        <button type="submit">Submit</button>
+      </form>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById('nameForm')
+        .addEventListener('submit', async (e) => {
+          e.preventDefault()
+          const name = document.getElementById('name').value
+          const resultDiv = document.getElementById('result')
+          resultDiv.textContent = 'Sending...'
+
+          try {
+            const res = await fetch('/data', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name }),
+            })
+            const json = await res.json()
+            if (res.ok) {
+              resultDiv.textContent = json.message
+            } else {
+              resultDiv.textContent = json.error || 'Server error'
+            }
+          } catch (err) {
+            resultDiv.textContent = 'Network error'
+          }
+        })
+    </script>
+  </body>
+</html>

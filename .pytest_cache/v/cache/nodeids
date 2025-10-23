@@ -1,0 +1,5 @@
+[
+  "main/tests/test_app.py::test_data_post",
+  "main/tests/test_app.py::test_health",
+  "main/tests/test_app.py::test_home"
+]
