@@ -1,12 +1,12 @@
-name : Docker Build and Push 
-on :
-    push:
-        branches: [ "main" ]
-    pull_request:
-        branches: [ "main" ]
+name: Docker Build and Push
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
 
 jobs:
-   docker:
+  docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,6 +19,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./main
+          file: ./main/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/gha-docker-flask:latest
